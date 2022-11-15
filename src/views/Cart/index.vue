@@ -21,10 +21,14 @@
             <li>
               <div class="cart-left">
                 <!-- <my-checked v-model="item.checked"></my-checked> -->
-                <van-checkbox
+                <my-checked
+                  :modelValue="item.checked"
+                  @change="$event=>checkOne(item.id,$event)"
+                ></my-checked>
+                <!-- <van-checkbox
                   checked-color="#c00"
                   v-model="item.checked"
-                ></van-checkbox>
+                ></van-checkbox> -->
               </div>
               <div class="cart-right">
                 <div class="img-box">
@@ -72,11 +76,11 @@
     </div>
     <!-- 购物车底部footer -->
     <div class="cart-footer">
-      <!-- <my-checked v-model="checkAll">全选</my-checked> -->
-      <van-checkbox
+      <my-checked v-model="checkAll">全选</my-checked>
+      <!-- <van-checkbox
         checked-color="#c00"
         v-model="checkAll"
-      >全选</van-checkbox>
+      >全选</van-checkbox> -->
       <div class="footer-right">
         <div class="total-price">
           <span class="total-price-text">合计: </span>
@@ -103,7 +107,9 @@ import { useStore } from 'vuex'
 import { Dialog, Toast, Notify } from 'vant'
 import { useLikeGoods } from './js/like-goods'
 import { useRouter } from 'vue-router'
+import myChecked from '@/components/library/myChecked.vue'
 export default {
+  components: { myChecked },
   setup() {
     // 猜你喜欢数据
     const router = useRouter()
@@ -178,7 +184,12 @@ export default {
       }
     }
 
-    return { checkAll, acheck, isShow, delChecked, likeList, del, order }
+    // 单选
+    const checkOne = (id, selected) => {
+      // 调用mutations的方法，修改当前点击的数据的状态
+      store.commit('cart/changeState', { id, selected })
+    }
+    return { checkAll, acheck, isShow, delChecked, likeList, del, order, checkOne }
   }
 }
 </script>

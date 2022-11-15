@@ -31,11 +31,11 @@ export default {
             state.cartList = state.cartList.filter((item) => item.checked === false)
         },
         // 修改购物车中商品的状态
-        changeState(state, id) {
+        changeState(state, obj) {
             // 1 根据id找下标
-            const idx = state.cartList.findIndex(item => item.id === id)
+            const idx = state.cartList.findIndex(item => item.id === obj.id)
             // 2 修改购物车中的商品的状态
-            state.cartList[idx].checked = !state.cartList[idx].checked
+            state.cartList[idx].checked = obj.selected
         },
         chooseAll(state, val) {
             // 更改所有购物车商品的状态
